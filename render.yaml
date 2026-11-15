@@ -1,0 +1,23 @@
+# Render blueprint: one Node service serves the site AND the API (so the strict CSP keeps working).
+# Free instances sleep when idle and have no persistent disk: fine for a demo, not for real data.
+# For real use choose a paid plan, add a disk, and keep DB_FILE on it.
+services:
+  - type: web
+    name: elderease
+    runtime: node
+    plan: free
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - { key: NODE_VERSION, value: "22" }
+      - { key: NODE_ENV, value: production }
+      - { key: TRUST_PROXY, value: "1" }
+      - { key: SEED_DEMO, value: "1" }
+      - { key: APP_URL, sync: false }          # e.g. https://elderease.onrender.com
+      - { key: RESEND_API_KEY, sync: false }
+      - { key: MAIL_FROM, sync: false }
+      - { key: SMTP_HOST, sync: false }        # or use SMTP instead of Resend (e.g. smtp.gmail.com)
+      - { key: SMTP_USER, sync: false }
+      - { key: SMTP_PASS, sync: false }
+      - { key: CRON_SECRET, generateValue: true }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+    <meta name="referrer" content="no-referrer">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#1B2A41">
+    <link rel="icon" href="icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+    <title>Choose a new password · ElderEase</title>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-flex">
+            <a class="brand" href="index.html">ElderEase</a>
+        </div>
+    </header>
+    <main class="container page-main">
+        <section class="form-section reset-box" aria-labelledby="reset-title">
+            <h1 id="reset-title">Choose a new password</h1>
+            <p id="reset-msg" class="auth-msg" role="alert" hidden></p>
+            <form id="reset-form" novalidate>
+                <div class="form-group">
+                    <label for="rs-pass">New password</label>
+                    <input type="password" id="rs-pass" autocomplete="new-password" minlength="8" maxlength="128" required aria-describedby="rs-hint">
+                    <p class="hint" id="rs-hint">At least 8 characters, with a letter and a number.</p>
+                </div>
+                <div class="form-group">
+                    <label for="rs-pass2">Type it again</label>
+                    <input type="password" id="rs-pass2" autocomplete="new-password" minlength="8" maxlength="128" required>
+                    <label class="show-pw"><input type="checkbox" id="rs-show"> <span>Show passwords</span></label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save new password</button>
+            </form>
+            <p id="reset-done" hidden><a class="btn btn-primary" href="index.html">Go to log in</a></p>
+            <p class="hint">Saving signs you out on every device, so anyone who knew the old password is locked out.</p>
+        </section>
+    </main>
+    <script src="reset.js"></script>
+</body>
+</html>

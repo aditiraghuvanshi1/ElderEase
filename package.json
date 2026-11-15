@@ -1,0 +1,20 @@
+{
+  "name": "elderease",
+  "version": "3.2.0",
+  "private": true,
+  "description": "ElderEase: static site + Node backend (SQLite, scheduler, email reminders by API or SMTP).",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node server/src/index.js",
+    "dev": "SEED_DEMO=1 node server/src/index.js",
+    "test": "node --test --no-warnings server/test/e2e.test.js server/test/account.test.js"
+  },
+  "dependencies": {
+    "nodemailer": "^10.5.0"
+  },
+  "devDependencies": {
+    "smtp-server": "^3.21.4"
+  }
+}

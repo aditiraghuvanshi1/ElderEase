@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="noindex">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1B2A41">
+    <link rel="icon" href="icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+    <title>Care Circle · ElderEase</title>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-flex">
+            <div>
+                <a class="brand" href="index.html">ElderEase</a>
+                <p class="subtitle" id="care-sub">Care Circle: medicines, appointments and updates, shared with family</p>
+            </div>
+            <div class="header-controls">
+                <a href="index.html" class="logout-link">ElderEase home</a>
+                <button type="button" class="header-btn" id="care-logout" hidden>Log out</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container page-main">
+        <div id="care-toast" class="care-toast" role="status" aria-live="polite" hidden></div>
+
+        <!-- SIGN IN -->
+        <section id="view-auth" class="care-auth">
+            <div class="form-section">
+                <div class="auth-tabs" role="tablist">
+                    <button type="button" class="auth-tab active" id="c-tab-login" role="tab" aria-selected="true">Sign in</button>
+                    <button type="button" class="auth-tab" id="c-tab-signup" role="tab" aria-selected="false">Create account</button>
+                </div>
+                <p id="c-msg" class="auth-msg" role="alert" hidden></p>
+
+                <form id="c-login" autocomplete="on">
+                    <div class="form-group"><label for="c-email">Email</label><input type="email" id="c-email" autocomplete="email" maxlength="254" required></div>
+                    <div class="form-group"><label for="c-pass">Password</label><input type="password" id="c-pass" autocomplete="current-password" maxlength="128" required></div>
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                    <p class="forgot-row"><a href="index.html">Forgot your password? Reset it from the log in page.</a></p>
+                </form>
+
+                <form id="c-signup" autocomplete="on" hidden>
+                    <fieldset class="care-roles">
+                        <legend>I am a…</legend>
+                        <label><input type="radio" name="c-role" value="elder" checked> Elder (60+)</label>
+                        <label><input type="radio" name="c-role" value="family"> Family member</label>
+                        <label><input type="radio" name="c-role" value="caretaker"> Caretaker</label>
+                    </fieldset>
+                    <div class="form-group"><label for="r-name">Full name</label><input type="text" id="r-name" autocomplete="name" maxlength="80" required></div>
+                    <div class="form-group"><label for="r-age">Age</label><input type="number" id="r-age" min="60" max="120" required><p class="hint" id="r-agehint">Elder accounts are for ages 60 and over.</p></div>
+                    <div class="form-group"><label for="r-email">Email <small>(reminders are sent here)</small></label><input type="email" id="r-email" autocomplete="email" maxlength="254" required></div>
+                    <div class="form-group"><label for="r-pass">Password</label><input type="password" id="r-pass" autocomplete="new-password" minlength="8" maxlength="128" required><p class="hint">At least 8 characters with a letter and a number.</p></div>
+                    <div class="form-group" id="r-passcode-row" hidden><label for="r-passcode">Care passcode <small>(from the elder, optional now)</small></label><input type="text" id="r-passcode" maxlength="9" autocomplete="off" placeholder="K7M2-9QXP"></div>
+                    <button type="submit" class="btn btn-primary">Create account</button>
+                </form>
+            </div>
+
+            <aside class="form-section" id="care-demo" hidden>
+                <h2>Try the demo</h2>
+                <p class="hint">Three linked accounts with 14 days of medicine history. Tap one to fill in the form.</p>
+                <div class="care-demo-grid">
+                    <button type="button" class="demo-card" data-demo="elder.demo@elderease.in|Elder@123"><strong>Elder</strong><span>Savitri Devi</span></button>
+                    <button type="button" class="demo-card" data-demo="caretaker.demo@elderease.in|Care@1234"><strong>Caretaker</strong><span>Meena Joshi</span></button>
+                    <button type="button" class="demo-card" data-demo="family.demo@elderease.in|Family@123"><strong>Family</strong><span>Arjun (view only)</span></button>
+                </div>
+            </aside>
+        </section>
+
+        <!-- APP -->
+        <section id="view-app" hidden>
+            <div class="care-bar">
+                <div class="form-group care-elder-pick" id="elder-pick-wrap" hidden><label for="elder-pick">Looking after</label><select id="elder-pick"></select></div>
+                <p class="care-live" id="care-live" hidden>● live</p>
+            </div>
+            <nav class="care-tabs" id="care-tabs" aria-label="Care Circle sections"></nav>
+            <div id="panel"></div>
+        </section>
+    </main>
+    <script src="care.js"></script>
+</body>
+</html>

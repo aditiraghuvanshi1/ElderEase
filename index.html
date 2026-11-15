@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="description" content="ElderEase connects elders with young volunteers in their own neighbourhood for everyday help.">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1B2A41">
+    <link rel="icon" href="icon-192.png">
+    <link rel="preload" href="fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+    <title>Log in · ElderEase</title>
+</head>
+<body>
+<div class="login-page">
+
+    <section class="login-story" aria-labelledby="story-title">
+        <p class="brand">ElderEase</p>
+        <div>
+            <h1 id="story-title">Help is a few doors away.</h1>
+            <p class="lede" data-i18n="tagline">Connect. Support. Build Community.</p>
+        </div>
+        <ol class="steps">
+            <li><strong>An elder posts a request</strong><span>Fetching medicine, setting up a phone, carrying water cans up the stairs.</span></li>
+            <li><strong>A neighbour offers to help</strong><span>The elder sees who it is and accepts. Only then is the address shared.</span></li>
+            <li><strong>The elder confirms it is done</strong><span>The helper earns Mitra Coins and a rating they can show.</span></li>
+        </ol>
+    </section>
+
+    <main class="login-panel">
+        <div class="login-inner">
+            <div class="lang-row" id="lang-slot"></div>
+
+            <div class="auth-tabs" role="tablist" aria-label="Log in or sign up">
+                <button type="button" class="auth-tab active" id="tab-login" role="tab" aria-selected="true" aria-controls="login-form" data-i18n="login">Log In</button>
+                <button type="button" class="auth-tab" id="tab-signup" role="tab" aria-selected="false" aria-controls="signup-form" data-i18n="signup">Sign Up</button>
+            </div>
+
+            <p id="auth-msg" class="auth-msg" role="alert" hidden></p>
+
+            <form id="login-form" autocomplete="on" novalidate>
+                <div class="form-group">
+                    <label for="login-email" data-i18n="email">Email</label>
+                    <input type="email" id="login-email" name="email" placeholder="you@example.com" autocomplete="username" maxlength="254" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password" data-i18n="password">Password</label>
+                    <input type="password" id="login-password" name="password" autocomplete="current-password" maxlength="128" required>
+                    <label class="show-pw"><input type="checkbox" data-show-for="login-password"> <span data-i18n="showpw">Show password</span></label>
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn" data-i18n="login">Log In</button>
+                <p class="forgot-row server-only" hidden><button type="button" class="link-btn" id="forgot-open">Forgot your password?</button></p>
+            </form>
+
+            <form id="forgot-form" autocomplete="on" novalidate hidden>
+                <h3 class="form-title">Reset your password</h3>
+                <p class="hint">Enter the email you signed up with. We will send a link to choose a new password. It works once and expires in 30 minutes.</p>
+                <div class="form-group">
+                    <label for="forgot-email">Email</label>
+                    <input type="email" id="forgot-email" autocomplete="username" maxlength="254" required>
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn">Send reset link</button>
+                <p class="forgot-row"><button type="button" class="link-btn" id="forgot-close">Back to log in</button></p>
+                <p class="hint">Volunteer helper accounts are kept on this device only, so they cannot be reset by email.</p>
+            </form>
+
+            <form id="signup-form" autocomplete="on" novalidate hidden>
+                <div class="form-group">
+                    <label data-i18n="chooserole">Choose Your Role</label>
+                    <div class="role-grid">
+                        <label>
+                            <input type="radio" name="user-role" value="adult" checked>
+                            <span class="role-box">
+                                <span class="role-title" data-i18n="elder">Elder / Adult</span>
+                                <span class="role-desc" data-i18n="elderdesc">I need help with daily tasks. (Age 60+)</span>
+                            </span>
+                        </label>
+                        <label>
+                            <input type="radio" name="user-role" value="helper">
+                            <span class="role-box">
+                                <span class="role-title" data-i18n="helper">Youth / Helper</span>
+                                <span class="role-desc" data-i18n="helperdesc">I want to volunteer and earn Mitra Coins. (Age 18+)</span>
+                            </span>
+                        </label>
+                        <label class="server-only" hidden>
+                            <input type="radio" name="user-role" value="family">
+                            <span class="role-box">
+                                <span class="role-title">Family member</span>
+                                <span class="role-desc">I want to follow a parent's medicines and appointments. (View only)</span>
+                            </span>
+                        </label>
+                        <label class="server-only" hidden>
+                            <input type="radio" name="user-role" value="caretaker">
+                            <span class="role-box">
+                                <span class="role-title">Caretaker</span>
+                                <span class="role-desc">I look after someone and update their medicines and doses.</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group" id="su-passcode-row" hidden>
+                    <label for="su-passcode">Care passcode <small>(from the elder; you can add it later)</small></label>
+                    <input type="text" id="su-passcode" maxlength="9" autocomplete="off" autocapitalize="characters" placeholder="K7M2-9QXP">
+                </div>
+                <div class="form-group">
+                    <label for="su-name" data-i18n="fullname">Full Name</label>
+                    <input type="text" id="su-name" name="name" autocomplete="name" minlength="2" maxlength="80" required>
+                </div>
+                <div class="form-group">
+                    <label for="su-age" data-i18n="age">Age</label>
+                    <input type="number" id="su-age" name="age" inputmode="numeric" min="60" max="120" step="1" required>
+                    <p class="hint" id="age-hint" data-i18n="agehint_elder">Elders must be 60 or older.</p>
+                </div>
+                <div class="form-group">
+                    <label for="su-email" data-i18n="email">Email</label>
+                    <input type="email" id="su-email" name="email" placeholder="you@example.com" autocomplete="email" maxlength="254" required>
+                </div>
+                <div class="form-group">
+                    <label for="su-password" data-i18n="createpw">Create Password</label>
+                    <input type="password" id="su-password" name="new-password" autocomplete="new-password" minlength="8" maxlength="128" required aria-describedby="pw-hint">
+                    <p class="hint" id="pw-hint">At least 8 characters, with a letter and a number.</p>
+                    <label class="show-pw"><input type="checkbox" data-show-for="su-password"> <span data-i18n="showpw">Show password</span></label>
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn" data-i18n="createacc">Create Account</button>
+            </form>
+
+            <aside class="demo-box" aria-labelledby="demo-title">
+                <h3 id="demo-title" data-i18n="demo">Demo accounts</h3>
+                <p class="hint" data-i18n="demohint">Tap a card to fill in the login form.</p>
+                <div class="demo-grid">
+                    <button type="button" class="demo-card local-only" data-demo="elder">
+                        <strong data-i18n="demoelder">Elder demo</strong>
+                        <span>elder@demo.in</span>
+                    </button>
+                    <button type="button" class="demo-card server-demo" data-demo="s-elder" hidden>
+                        <strong data-i18n="demoelder">Elder demo</strong>
+                        <span>Savitri Devi</span>
+                    </button>
+                    <button type="button" class="demo-card server-demo" data-demo="s-care" hidden>
+                        <strong>Caretaker demo</strong>
+                        <span>Meena Joshi</span>
+                    </button>
+                    <button type="button" class="demo-card server-demo" data-demo="s-family" hidden>
+                        <strong>Family demo</strong>
+                        <span>Arjun (view only)</span>
+                    </button>
+                    <button type="button" class="demo-card" data-demo="helper">
+                        <strong data-i18n="demohelper">Helper demo</strong>
+                        <span>helper@demo.in</span>
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </main>
+</div>
+
+<script src="auth.js"></script>
+<script src="i18n.js"></script>
+<script src="login.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="noindex">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1B2A41">
+    <link rel="icon" href="icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+    <title>Home · ElderEase</title>
+</head>
+<body data-page-role="adult">
+
+    <header class="main-header">
+        <div class="container header-flex">
+            <div>
+                <a class="brand" href="adult.html">ElderEase</a>
+                <p class="subtitle"><span data-i18n="welcome">Welcome back,</span> <strong id="display-profile-name"></strong></p>
+            </div>
+            <div class="header-controls">
+                <span id="lang-slot"></span>
+                <button type="button" id="elder-mode-btn" class="header-btn" aria-pressed="false">Larger text</button>
+                <a href="index.html" class="logout-link" data-action="logout" data-i18n="logout">Log out</a>
+            </div>
+        </div>
+        <div class="container"><nav id="app-nav"></nav></div>
+    </header>
+
+    <main class="container page-main">
+
+        <div id="daily-reminder-banner" class="daily-reminder-card no-print">
+            <div>
+                <h4 data-i18n="rem_title">Daily Health &amp; Activity Reminder</h4>
+                <p data-i18n="rem_desc">Take your medicines on time and record your health log today.</p>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" data-action="dismiss-reminder" data-i18n="gotit">Got it</button>
+        </div>
+
+        <section class="directory" aria-labelledby="em-title">
+            <div>
+                <div class="directory-intro">
+                    <h1 id="em-title" data-i18n="em_title">Emergency helplines and your doctor</h1>
+                    <p class="form-intro" data-i18n="em_intro">Tap a number to call.</p>
+                </div>
+                <div class="dial-grid">
+                    <button type="button" class="dial" data-action="call" data-number="108" data-label="Ambulance">
+                        <span class="dial-num">108</span>
+                        <span class="dial-name" data-i18n="ambulance">Ambulance</span>
+                    </button>
+                    <button type="button" class="dial" data-action="call" data-number="112" data-label="National Emergency">
+                        <span class="dial-num">112</span>
+                        <span class="dial-name" data-i18n="natl">National Help</span>
+                    </button>
+                    <button type="button" class="dial" data-action="call" data-number="102" data-label="Medical Helpline">
+                        <span class="dial-num">102</span>
+                        <span class="dial-name" data-i18n="medcare">Medical Care</span>
+                    </button>
+                    <button type="button" class="dial dial-wide" data-action="hospitals">
+                        <span class="dial-name"><span data-i18n="hospitals">Hospitals</span> · <span data-i18n="nearme">Near Me</span></span>
+                        <span class="dial-hint">Opens Google Maps</span>
+                    </button>
+                </div>
+                <div class="sos-explain">
+                    <span class="sos-chip" aria-hidden="true">SOS</span>
+                    <p>The red SOS button at the bottom of every page sends your name, address and live location to your family on WhatsApp or SMS, with a one-tap call to 112.</p>
+                </div>
+            </div>
+
+            <div class="saved-info form-section">
+                <h3 data-i18n="em_info">Your Emergency Information</h3>
+                <div class="form-group">
+                    <label for="elder-contact-no" data-i18n="doc_contact">Doctor / Relative contact number:</label>
+                    <div class="inline-field">
+                        <input type="text" id="elder-contact-no" maxlength="60" autocomplete="off" placeholder="Dr. Verma, +91 98765 43210">
+                        <button type="button" class="btn btn-secondary" data-action="call-doctor" data-i18n="call">Call</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="elder-family-no" data-i18n="fam_no">Family WhatsApp number:</label>
+                    <input type="tel" id="elder-family-no" inputmode="tel" maxlength="20" autocomplete="tel" placeholder="98765 43210">
+                </div>
+                <div class="form-group">
+                    <label for="elder-home-address" data-i18n="home_addr">Your home address:</label>
+                    <textarea id="elder-home-address" rows="2" maxlength="200" autocomplete="street-address"></textarea>
+                </div>
+                <div class="btn-row">
+                    <button type="button" id="save-emergency-btn" class="btn btn-primary" data-i18n="save_em">Save Emergency Info</button>
+                    <button type="button" class="btn btn-danger" data-action="copy-sos" data-i18n="copy_sos">Copy SOS</button>
+                    <span id="emergency-save-status" class="status-msg" role="status"></span>
+                </div>
+            </div>
+        </section>
+
+        <div class="split-7-5">
+            <section class="form-section" aria-labelledby="dl-title">
+                <h2 id="dl-title" data-i18n="dl_title">Today's health and routine</h2>
+                <p class="form-intro" data-i18n="dl_intro">Track medicines and notes for the day:</p>
+
+                <h4 class="mini-h" data-i18n="med_tracker">Today's Medication Tracker</h4>
+                <div id="server-doses" class="server-doses" aria-live="polite" hidden></div>
+                <div class="med-horizontal-row" id="local-meds">
+                    <label class="med-dose-chip"><input type="checkbox" id="med-morning"> <span data-i18n="morning">Morning Dose</span></label>
+                    <label class="med-dose-chip"><input type="checkbox" id="med-afternoon"> <span data-i18n="afternoon">Afternoon Dose</span></label>
+                    <label class="med-dose-chip"><input type="checkbox" id="med-night"> <span data-i18n="night">Night Dose</span></label>
+                </div>
+
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="health-log-input" data-i18n="hl_label">Quick note:</label>
+                        <button type="button" class="mic-round-btn" data-action="voice" data-field="health-log-input" data-label="your note" aria-label="Speak your note"><svg class="mic-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+                    </div>
+                    <textarea id="health-log-input" rows="2" maxlength="300" data-i18n-ph="hl_ph"></textarea>
+                </div>
+                <div class="btn-row">
+                    <button type="button" class="btn btn-primary" data-action="save-log" data-i18n="save_entry">Save Entry</button>
+                    <button type="button" class="btn btn-secondary" data-action="summary" data-i18n="view_summary">View Daily Summary</button>
+                </div>
+
+                <h4 class="mini-h" data-i18n="today_entries">Today's Recorded Entries:</h4>
+                <div id="daily-log-entries-list" class="daily-log-entries-box"></div>
+            </section>
+
+            <div class="col-stack">
+                <div id="reminder-slot"></div>
+                <section class="profile-widget" aria-labelledby="lb-title">
+                    <h2 id="lb-title" data-i18n="lb_title">Neighbourhood helpers</h2>
+                    <p class="form-intro" data-i18n="lb_intro">Local volunteers, ranked by Mitra Coins earned.</p>
+                    <ol id="leaderboard-container" class="leaderboard"></ol>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div id="summary-modal" class="modal-overlay" aria-labelledby="summary-title">
+        <div class="modal-content">
+            <button type="button" class="modal-close-btn" data-action="close-modal" aria-label="Close">&times;</button>
+            <h2 id="summary-title">Today's summary</h2>
+            <p class="form-intro">Ready to send to your family or carer.</p>
+            <div id="summary-modal-body" class="summary-text"></div>
+            <button type="button" class="btn btn-primary btn-block" data-action="copy-summary">Copy for WhatsApp</button>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="i18n.js"></script>
+    <script src="app.js"></script>
+    <script src="elder-sync.js"></script>
+    <script src="features.js"></script>
+</body>
+</html>

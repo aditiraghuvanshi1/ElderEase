@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="noindex">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1B2A41">
+    <link rel="icon" href="icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+    <title>Request help · ElderEase</title>
+</head>
+<body data-page-role="adult">
+
+    <header class="main-header">
+        <div class="container header-flex">
+            <div>
+                <a class="brand" href="adult.html">ElderEase</a>
+                <p class="subtitle"><span data-i18n="welcome">Welcome back,</span> <strong id="display-profile-name"></strong></p>
+            </div>
+            <div class="header-controls">
+                <span id="lang-slot"></span>
+                <button type="button" id="elder-mode-btn" class="header-btn" aria-pressed="false">Larger text</button>
+                <a href="index.html" class="logout-link" data-action="logout" data-i18n="logout">Log out</a>
+            </div>
+        </div>
+        <div class="container"><nav id="app-nav"></nav></div>
+    </header>
+
+    <main class="container page-main">
+        <div class="split-5-7">
+            <div class="col-stack">
+                <section class="form-section" aria-labelledby="rq-title">
+                    <div class="section-head">
+                        <h1 id="rq-title" data-i18n="rq_title">Request a Helping Hand</h1>
+                    </div>
+                    <p class="form-intro" data-i18n="rq_intro">Tap the microphone in any box to speak instead of typing.</p>
+                    <div class="voice-lang-bar form-group">
+                        <label for="voice-lang-select" data-i18n="voice_lang">Voice Language:</label>
+                        <select id="voice-lang-select">
+                            <option value="en-IN" selected>English (India)</option>
+                            <option value="hi-IN">हिन्दी (Hindi)</option>
+                            <option value="mr-IN">मराठी (Marathi)</option>
+                            <option value="bn-IN">বাংলা (Bengali)</option>
+                            <option value="ta-IN">தமிழ் (Tamil)</option>
+                            <option value="te-IN">తెలుగు (Telugu)</option>
+                            <option value="gu-IN">ગુજરાતી (Gujarati)</option>
+                            <option value="pa-IN">ਪੰਜਾਬੀ (Punjabi)</option>
+                        </select>
+                    </div>
+                    <p id="voice-status-text" class="voice-status-indicator" role="status"></p>
+
+                    <form id="task-form" novalidate>
+                        <div class="form-group">
+                            <label for="task-title" data-i18n="f_title">What do you need help with? (Title)</label>
+                            <div class="input-with-end-mic">
+                                <input type="text" id="task-title" maxlength="100" placeholder="Read a bank letter with me" required>
+                                <button type="button" class="field-mic-btn" data-action="voice" data-field="task-title" data-label="the title" aria-label="Speak the title"><svg class="mic-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-desc" data-i18n="f_desc">Short Description</label>
+                            <div class="input-with-end-mic">
+                                <textarea id="task-desc" rows="4" maxlength="600" placeholder="What should the helper do, and roughly how long will it take?" required></textarea>
+                                <button type="button" class="field-mic-btn mic-inside-textarea" data-action="voice" data-field="task-desc" data-label="the description" aria-label="Speak the description"><svg class="mic-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-location" data-i18n="f_area">Area / Locality</label>
+                            <div class="input-with-end-mic">
+                                <input type="text" id="task-location" maxlength="100" placeholder="Indiranagar, Bengaluru" required>
+                                <button type="button" class="field-mic-btn" data-action="voice" data-field="task-location" data-label="your area" aria-label="Speak your area"><svg class="mic-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-address" data-i18n="f_addr">Full address / landmark</label>
+                            <textarea id="task-address" rows="2" maxlength="200" autocomplete="street-address" placeholder="Flat 402, Block B, near the temple"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="task-category" data-i18n="f_cat">Category</label>
+                                <select id="task-category">
+                                    <option value="Household" data-i18n="c_house">Household Chore</option>
+                                    <option value="Tech Support" data-i18n="c_tech">Tech Support</option>
+                                    <option value="Heavy Lifting" data-i18n="c_heavy">Heavy Lifting</option>
+                                    <option value="Other" data-i18n="c_other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="task-repeat" data-i18n="f_repeat">Repeat</label>
+                                <select id="task-repeat">
+                                    <option value="none" data-i18n="r_once">Just once</option>
+                                    <option value="daily" data-i18n="r_daily">Every day</option>
+                                    <option value="weekly" data-i18n="r_weekly">Every week</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-when" data-i18n="f_when">When do you need help?</label>
+                            <input type="datetime-local" id="task-when">
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="task-urgent">
+                            <label for="task-urgent" class="urgent-label" data-i18n="f_urgent">Mark as urgent</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" data-i18n="post">Post request</button>
+                    </form>
+                </section>
+            </div>
+
+            <div class="col-stack">
+                <section id="helper-approval-section" class="approval-box" aria-live="polite" hidden>
+                    <h3 data-i18n="offers_title">A helper has offered. Accept?</h3>
+                    <p>Accepting shares your full address with this helper and opens a private chat.</p>
+                    <div id="approval-cards-container"></div>
+                </section>
+
+                <section id="in-progress-section" class="active-progress-box" hidden>
+                    <h3 data-i18n="progress_title">Help in Progress</h3>
+                    <p>When the work is done, confirm it here. That releases the helper's Mitra Coins.</p>
+                    <div id="in-progress-cards-container"></div>
+                </section>
+
+                <section class="board-section" aria-labelledby="bd-title">
+                    <div class="board-header">
+                        <div class="title-line">
+                            <h2 id="bd-title" data-i18n="bd_title">All Neighborhood Requests Status</h2>
+                            <span id="task-count" class="board-count" aria-live="polite"></span>
+                        </div>
+                        <div class="controls-wrapper">
+                            <input type="search" id="search-input" maxlength="100" data-i18n-ph="search_ph" aria-label="Search requests">
+                            <select id="scope-select" aria-label="Show which requests">
+                                <option value="all" data-i18n="s_all">All requests</option>
+                                <option value="mine" data-i18n="s_mine">My active requests</option>
+                                <option value="history" data-i18n="s_hist">My history</option>
+                            </select>
+                            <select id="filter-select" aria-label="Category">
+                                <option value="All" data-i18n="c_all">All Categories</option>
+                                <option value="Household" data-i18n="c_house">Household Chore</option>
+                                <option value="Tech Support" data-i18n="c_tech">Tech Support</option>
+                                <option value="Heavy Lifting" data-i18n="c_heavy">Heavy Lifting</option>
+                                <option value="Other" data-i18n="c_other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="task-board" class="task-board"></div>
+                </section>
+
+                <section class="profile-widget" aria-labelledby="lb-title">
+                    <h2 id="lb-title" data-i18n="lb_title">Neighbourhood helpers</h2>
+                    <p class="form-intro" data-i18n="lb_intro">Local volunteers, ranked by Mitra Coins earned.</p>
+                    <ol id="leaderboard-container" class="leaderboard"></ol>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div id="rating-modal" class="modal-overlay" aria-labelledby="rating-title">
+        <div class="modal-content">
+            <button type="button" class="modal-close-btn" id="close-rating-modal-btn" aria-label="Close">&times;</button>
+            <h2 id="rating-title">Confirm the help is done</h2>
+            <p class="modal-text"><strong id="rating-task-title"></strong></p>
+            <p>How was <strong id="rating-helper-name">the helper</strong>?</p>
+            <div class="rating-horizontal-grid">
+                <button type="button" class="rating-option-card selected-rating" data-action="pick-rating" data-rating="friendly" aria-pressed="true">
+                    <strong>Friendly and helpful</strong>
+                    <span>Counts towards their friendly ratings</span>
+                </button>
+                <button type="button" class="rating-option-card" data-action="pick-rating" data-rating="unfriendly" aria-pressed="false">
+                    <strong>Neutral</strong>
+                    <span>Done, but could be better</span>
+                </button>
+            </div>
+            <button type="button" id="submit-completion-btn" class="btn btn-primary btn-block">Confirm and award Mitra Coins</button>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="i18n.js"></script>
+    <script src="app.js"></script>
+    <script src="features.js"></script>
+</body>
+</html>

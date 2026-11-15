@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="noindex">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1B2A41">
+    <link rel="icon" href="icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+    <title>Helper · ElderEase</title>
+</head>
+<body data-page-role="helper">
+
+    <header class="main-header">
+        <div class="container header-flex">
+            <div>
+                <a class="brand" href="helper.html">ElderEase</a>
+                <p class="subtitle"><span data-i18n="welcome">Welcome back,</span> <strong id="display-profile-name"></strong></p>
+            </div>
+            <div class="header-controls">
+                <span id="lang-slot"></span>
+                
+                <a href="index.html" class="logout-link" data-action="logout" data-i18n="logout">Log out</a>
+            </div>
+        </div>
+        
+    </header>
+
+    <main class="container page-main">
+        <div class="split-4-8">
+            <div class="col-stack sticky">
+                <section class="profile-widget wallet" aria-labelledby="wallet-title">
+                    <h2 id="wallet-title">Your wallet</h2>
+                    <p class="wallet-num" id="karma-score">0</p>
+                    <p class="wallet-unit">Mitra Coins. 10 for each request you complete, 25 if it was urgent.</p>
+                    <p class="wallet-rank" id="karma-badge-text">Getting Started</p>
+                    <p class="muted"><span id="helper-friendly-count">0</span> friendly ratings so far</p>
+                </section>
+
+                <section class="profile-widget" aria-labelledby="ms-title">
+                    <h2 id="ms-title">What your coins unlock</h2>
+                    <ul class="milestone-list">
+                        <li id="ms-1" class="locked"><span class="ms-need">50</span><strong>Local Helper badge</strong><span class="ms-state"></span></li>
+                        <li id="ms-2" class="locked"><span class="ms-need">100</span><strong>Community Hero certificate</strong><span class="ms-state"></span></li>
+                        <li id="ms-3" class="locked"><span class="ms-need">200</span><strong>Metro or bus ride voucher</strong><span class="ms-state"></span></li>
+                    </ul>
+                </section>
+            </div>
+
+            <section class="board-section" aria-labelledby="board-title">
+                <div class="board-header">
+                    <div class="title-line">
+                        <h1 id="board-title">Requests near you</h1>
+                        <span id="task-count" class="board-count" aria-live="polite"></span>
+                    </div>
+                    <p class="section-note">Offer to help, wait for the elder to accept, then use the chat to agree a time. Their address appears once they accept.</p>
+                    <div class="controls-wrapper">
+                        <input type="search" id="search-input" maxlength="100" placeholder="Search by area or task" aria-label="Search requests">
+                        <select id="scope-select" aria-label="Show which requests">
+                            <option value="all">All requests</option>
+                            <option value="mine">Ones I am helping with</option>
+                            <option value="history">My history</option>
+                        </select>
+                        <select id="filter-select" aria-label="Category">
+                            <option value="All" data-i18n="c_all">All Categories</option>
+                            <option value="Household" data-i18n="c_house">Household Chore</option>
+                            <option value="Tech Support" data-i18n="c_tech">Tech Support</option>
+                            <option value="Heavy Lifting" data-i18n="c_heavy">Heavy Lifting</option>
+                            <option value="Other" data-i18n="c_other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="task-board" class="task-board"></div>
+            </section>
+        </div>
+    </main>
+
+    <div id="contact-modal" class="modal-overlay" aria-labelledby="contact-title">
+        <div class="modal-content">
+            <button type="button" class="modal-close-btn" id="close-modal-btn" aria-label="Close">&times;</button>
+            <h2 id="contact-title">Offer sent</h2>
+            <p id="modal-body-text" class="modal-text"></p>
+            <p class="muted">Mitra Coins are added once the elder confirms the work is done.</p>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="i18n.js"></script>
+    <script src="app.js"></script>
+    <script src="features.js"></script>
+</body>
+</html>

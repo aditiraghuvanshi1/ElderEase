@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="noindex">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1B2A41">
+    <link rel="icon" href="icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+    <title>Health logs · ElderEase</title>
+</head>
+<body data-page-role="adult">
+
+    <header class="main-header">
+        <div class="container header-flex">
+            <div>
+                <a class="brand" href="adult.html">ElderEase</a>
+                <p class="subtitle"><span data-i18n="welcome">Welcome back,</span> <strong id="display-profile-name"></strong></p>
+            </div>
+            <div class="header-controls">
+                <span id="lang-slot"></span>
+                <button type="button" id="elder-mode-btn" class="header-btn" aria-pressed="false">Larger text</button>
+                <a href="index.html" class="logout-link" data-action="logout" data-i18n="logout">Log out</a>
+            </div>
+        </div>
+        <div class="container"><nav id="app-nav"></nav></div>
+    </header>
+
+    <main class="container page-main">
+        <section class="page-intro">
+            <h1 data-i18n="hp_title">Health Logs</h1>
+            <p class="form-intro" data-i18n="hp_intro"></p>
+        </section>
+
+        <div id="alert-box" class="health-alert" role="alert" hidden></div>
+
+        <div class="three-col">
+            <section class="form-section">
+                <h2 data-i18n="vit_title"></h2>
+                <div class="form-row">
+                    <div class="form-group"><label for="v-sys" data-i18n="sys"></label><input type="number" id="v-sys" inputmode="numeric" min="50" max="260" step="1" placeholder="130"></div>
+                    <div class="form-group"><label for="v-dia" data-i18n="dia"></label><input type="number" id="v-dia" inputmode="numeric" min="30" max="150" step="1" placeholder="85"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="v-sugar" data-i18n="sugar"></label><input type="number" id="v-sugar" inputmode="numeric" min="30" max="600" step="1" placeholder="110"></div>
+                    <div class="form-group"><label for="v-sugar-when">When</label>
+                        <select id="v-sugar-when"><option value="fasting" data-i18n="fasting"></option><option value="aftermeal" data-i18n="aftermeal"></option><option value="random" data-i18n="random"></option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="v-pulse" data-i18n="pulse"></label><input type="number" id="v-pulse" inputmode="numeric" min="30" max="220" step="1" placeholder="72"></div>
+                    <div class="form-group"><label for="v-spo2" data-i18n="spo2"></label><input type="number" id="v-spo2" inputmode="numeric" min="70" max="100" step="1" placeholder="97"></div>
+                </div>
+                <div class="form-group"><label for="v-weight" data-i18n="weight"></label><input type="number" id="v-weight" inputmode="decimal" min="20" max="250" step="0.1" placeholder="65"></div>
+                <button type="button" class="btn btn-primary" id="save-vitals" data-i18n="save_vitals"></button>
+            </section>
+
+            <section class="form-section">
+                <h2 data-i18n="mood_title"></h2>
+                <p class="form-intro" data-i18n="mood_q"></p>
+                <div class="mood-row" id="mood-row"></div>
+                <div class="form-row">
+                    <div class="form-group"><label for="m-sleep" data-i18n="sleep"></label><input type="number" id="m-sleep" inputmode="decimal" min="0" max="24" step="0.5" placeholder="7"></div>
+                    <div class="form-group"><label for="m-stress" data-i18n="stress"></label>
+                        <select id="m-stress"><option value="low" data-i18n="lvl_low"></option><option value="med" data-i18n="lvl_med"></option><option value="high" data-i18n="lvl_high"></option></select></div>
+                </div>
+                <div class="form-group checkbox-group"><input type="checkbox" id="m-lonely"><label for="m-lonely" data-i18n="lonely"></label></div>
+                <div class="form-group"><label for="m-note" data-i18n="mood_note"></label>
+                    <div class="input-with-end-mic"><textarea id="m-note" rows="2" maxlength="300"></textarea>
+                        <button type="button" class="field-mic-btn mic-inside-textarea" data-action="voice" data-field="m-note" data-label="your note" aria-label="Speak your note"><svg class="mic-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div></div>
+                <p id="lonely-tip" class="soft-tip" data-i18n="lonely_tip" hidden></p>
+                <button type="button" class="btn btn-primary" id="save-mood" data-i18n="save_mood"></button>
+            </section>
+
+            <section class="form-section">
+                <h2 data-i18n="sym_title"></h2>
+                <p class="form-intro" data-i18n="sym_intro"></p>
+                <div class="chip-grid form-group" id="sym-chips"></div>
+                <div class="form-group"><label for="sym-sev">How bad is it?</label><select id="sym-sev"><option value="sev_mild" data-i18n="sev_mild"></option><option value="sev_mod" data-i18n="sev_mod"></option><option value="sev_sev" data-i18n="sev_sev"></option></select></div>
+                <p id="sym-warn" class="health-alert" data-i18n="sym_warn" hidden></p>
+                <button type="button" class="btn btn-primary" id="save-sym" data-i18n="save_sym"></button>
+                <hr class="soft-hr">
+                <h3 data-i18n="well_title"></h3>
+                <div class="form-row">
+                    <div class="form-group"><label for="w-water" data-i18n="water"></label><input type="number" id="w-water" inputmode="numeric" min="0" max="30" step="1" placeholder="6"></div>
+                    <div class="form-group"><label for="w-walk" data-i18n="walk"></label><input type="number" id="w-walk" inputmode="numeric" min="0" max="600" step="1" placeholder="20"></div>
+                </div>
+                <button type="button" class="btn btn-secondary btn-block" id="save-well" data-i18n="save_well"></button>
+            </section>
+        </div>
+
+        <div class="split-7-5">
+            <section class="form-section">
+                <div class="cal-head">
+                    <button type="button" class="btn btn-secondary btn-sm" id="cal-prev" aria-label="Previous month">&lsaquo;</button>
+                    <h2 id="cal-title"></h2>
+                    <button type="button" class="btn btn-secondary btn-sm" id="cal-next" aria-label="Next month">&rsaquo;</button>
+                </div>
+                <div class="cal-grid cal-dow" id="cal-dow"></div>
+                <div class="cal-grid" id="cal-grid"></div>
+                <div class="cal-legend">
+                    <span><i class="dot d-vit"></i><span data-i18n="lg_vitals"></span></span>
+                    <span><i class="dot d-mood"></i><span data-i18n="lg_mood"></span></span>
+                    <span><i class="dot d-sym"></i><span data-i18n="lg_sym"></span></span>
+                    <span><i class="dot d-med"></i><span data-i18n="lg_meds"></span></span>
+                    <span><i class="dot d-appt"></i><span data-i18n="lg_appt"></span></span>
+                </div>
+                <div id="day-detail" class="day-detail" aria-live="polite"></div>
+            </section>
+
+            <div class="col-stack">
+                <section class="form-section">
+                    <h2 data-i18n="trend_title"></h2>
+                    <h4 class="mini-h" data-i18n="bp_trend"></h4>
+                    <p class="chart-key"><span><i class="k-accent"></i>Top (systolic)</span><span><i></i>Bottom (diastolic)</span></p>
+                    <div id="chart-bp"></div>
+                    <h4 class="mini-h" data-i18n="sugar_trend"></h4>
+                    <div id="chart-sugar"></div>
+                </section>
+                <section class="form-section">
+                    <h2 data-i18n="appt_title"></h2>
+                    <form id="appt-form" class="reminder-form">
+                        <input type="date" id="appt-date" required aria-label="Date">
+                        <input type="text" id="appt-text" maxlength="80" data-i18n-ph="appt_what" required aria-label="What is the appointment for?">
+                        <button class="btn btn-secondary" type="submit" data-i18n="add"></button>
+                    </form>
+                    <div id="appt-list"></div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="auth.js"></script>
+    <script src="i18n.js"></script>
+    <script src="app.js"></script>
+    <script src="features.js"></script>
+    <script src="healthdata.js"></script>
+    <script src="health.js"></script>
+</body>
+</html>
